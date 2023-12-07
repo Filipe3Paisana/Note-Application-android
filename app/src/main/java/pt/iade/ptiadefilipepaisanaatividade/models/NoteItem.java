@@ -89,11 +89,10 @@ public class NoteItem implements Serializable {
     public String getModifiedDateAsString() {
         return modifiedDate.get(Calendar.DAY_OF_MONTH) + "/" +
                 modifiedDate.get(Calendar.MONTH) + "/" +
-                modifiedDate.get(Calendar.YEAR) + " " +
-                modifiedDate.get(Calendar.HOUR_OF_DAY) + ":" +
-                modifiedDate.get(Calendar.MINUTE);
+                modifiedDate.get(Calendar.YEAR) + " ";
     }
     public void setModifiedDate(Calendar modifiedDate) {
         this.modifiedDate = modifiedDate;
     }
+
 }

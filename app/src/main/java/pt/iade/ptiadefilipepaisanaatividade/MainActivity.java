@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -61,6 +63,15 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(findViewById(R.id.toolbar));
 
         itemsRowAdapter = new NoteItemAdapter(this, itemsList);
+        itemsRowAdapter.setClickListener(new NoteItemAdapter.ItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent(MainActivity.this, NoteActivity.class);
+                intent.putExtra("item", itemsList.get(position));
+                startActivity(intent);
+            }
+        });
+
         itemsListView = (RecyclerView) findViewById(R.id.notas_list);
         itemsListView.setLayoutManager(new LinearLayoutManager(this));
         itemsListView.setAdapter(itemsRowAdapter);

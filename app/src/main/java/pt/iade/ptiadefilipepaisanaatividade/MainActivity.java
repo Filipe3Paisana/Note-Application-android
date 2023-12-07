@@ -2,18 +2,15 @@ package pt.iade.ptiadefilipepaisanaatividade;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.RecyclerView;
-import android.provider.ContactsContract;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.GregorianCalendar;
+
+import pt.iade.ptiadefilipepaisanaatividade.models.NoteItem;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,6 +18,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
         setupComponents();
     }
 
@@ -33,7 +32,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId() == R.id.action_add_note) {
+
             Intent intent = new Intent(MainActivity.this, NoteActivity.class);
+
+            intent.putExtra("item", new NoteItem());
+
+
             startActivity(intent);
             return true;
         }

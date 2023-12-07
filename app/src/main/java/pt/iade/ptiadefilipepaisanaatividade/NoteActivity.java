@@ -3,18 +3,14 @@ package pt.iade.ptiadefilipepaisanaatividade;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import android.view.MenuItem;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.view.Menu;
 import android.view.MenuItem;
+import android.os.Bundle;
+import android.view.Menu;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import java.util.GregorianCalendar;
 
 import pt.iade.ptiadefilipepaisanaatividade.models.NoteItem;
@@ -29,8 +25,10 @@ public class NoteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note);
-        item= new NoteItem(1,"Teste","Teste",new GregorianCalendar(),new GregorianCalendar());
 
+        Intent noteIntent = getIntent();
+
+        item = (NoteItem) noteIntent.getSerializableExtra("item");
 
         setupComponents();
     }
@@ -68,6 +66,11 @@ public class NoteActivity extends AppCompatActivity {
         noteBody.setText(item.getContent());
         lastModified.setText(item.getModifiedDateAsString().toString());
     }
+
+
+
+
+
     private void showDeleteConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Confirmar");

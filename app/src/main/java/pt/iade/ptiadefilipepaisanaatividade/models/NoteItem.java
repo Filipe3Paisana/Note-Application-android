@@ -1,9 +1,10 @@
 package pt.iade.ptiadefilipepaisanaatividade.models;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-public class NoteItem {
+public class NoteItem implements Serializable {
    int id;
 
     String title;

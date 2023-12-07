@@ -2,12 +2,19 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/action_add_note"
+        android:id="@+id/delete_note"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:icon="@drawable/ic_add_note"
+        android:icon="@drawable/ic_delete_note"
         android:iconTint="@color/white"
         android:title="Item"
         app:showAsAction="ifRoom" />
-
+    <item
+        android:id="@+id/save_note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:icon="@drawable/ic_save_note"
+        android:iconTint="@color/white"
+        android:title="Item"
+        app:showAsAction="ifRoom" />
 </menu>

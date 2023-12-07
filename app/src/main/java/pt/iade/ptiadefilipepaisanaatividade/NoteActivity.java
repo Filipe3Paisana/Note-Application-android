@@ -68,9 +68,6 @@ public class NoteActivity extends AppCompatActivity {
     }
 
 
-
-
-
     private void showDeleteConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Confirmar");

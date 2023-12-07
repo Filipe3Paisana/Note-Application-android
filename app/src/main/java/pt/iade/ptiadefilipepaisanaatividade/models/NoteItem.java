@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 public class NoteItem implements Serializable {
    int id;
@@ -20,7 +21,8 @@ public class NoteItem implements Serializable {
 
     public static ArrayList<NoteItem> List(){
         //TODO: Replace this with a call to the database
-        ArrayList<NoteItem> items = new ArrayList<>();
+
+        ArrayList<NoteItem> items = new ArrayList<NoteItem>();
         items.add(new NoteItem(1,"Note 1", "This is the first note", new GregorianCalendar(), new GregorianCalendar()));
         items.add(new NoteItem(2,"Note 2", "This is the second note", new GregorianCalendar(), new GregorianCalendar()));
         items.add(new NoteItem(3,"Note 3", "This is the third note", new GregorianCalendar(), new GregorianCalendar()));
@@ -44,7 +46,6 @@ public class NoteItem implements Serializable {
         this.content = content;
         this.creationDate = creationDate;
         this.modifiedDate = modifiedDate;
-        this.summary = content.substring(0, Math.min(content.length(), 80));
     }
 
     public String getTitle() {

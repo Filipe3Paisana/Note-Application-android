@@ -9,16 +9,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
-
+import java.util.List;
+import androidx.appcompat.widget.Toolbar;
+import pt.iade.ptiadefilipepaisanaatividade.adapters.NoteItemAdapter;
 import pt.iade.ptiadefilipepaisanaatividade.models.NoteItem;
 
 
 public class MainActivity extends AppCompatActivity {
     protected RecyclerView itemsListView;
     protected ArrayList<NoteItem> itemsList;
+    protected NoteItemAdapter itemsRowAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +29,11 @@ public class MainActivity extends AppCompatActivity {
         itemsList = NoteItem.List();
 
         setupComponents();
+    }
+    protected void onResume() {
+        super.onResume();
+        itemsList = NoteItem.List();
+        itemsRowAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -53,8 +60,10 @@ public class MainActivity extends AppCompatActivity {
     private void setupComponents() {
         setSupportActionBar(findViewById(R.id.toolbar));
 
-        itemsListView = findViewById(R.id.notas_list);
+        itemsRowAdapter = new NoteItemAdapter(this, itemsList);
+        itemsListView = (RecyclerView) findViewById(R.id.notas_list);
         itemsListView.setLayoutManager(new LinearLayoutManager(this));
+        itemsListView.setAdapter(itemsRowAdapter);
 
     }
 }

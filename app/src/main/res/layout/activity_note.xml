@@ -1,33 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <!-- Layout para a NoteActivity (activity_note.xml) -->
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".NoteActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/nota"
+        app:titleTextColor="@color/white" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:orientation="vertical"
-        android:padding="16dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
         <EditText
-            android:id="@+id/noteTitleTextView"
+            android:id="@+id/note_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Título da Nota" />
+            android:ems="10"
+            android:inputType="text" />
 
         <EditText
-            android:id="@+id/contentEditText"
+            android:id="@+id/note_body"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Conteúdo da Nota"
-            android:inputType="textMultiLine"
-            android:gravity="top"
-            android:minLines="4" />
+            android:ems="10"
+            android:gravity="start|top"
+            android:inputType="textMultiLine" />
 
-        <TextView
-            android:id="@+id/modifiedDateTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
     </LinearLayout>
 
 

@@ -25,12 +25,14 @@
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:textStyle="bold"
-            tools:text="Titel" />
+            android:maxLines="1"
+            tools:text="Title" />
 
         <TextView
             android:id="@+id/note_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:maxLines="1"
             tools:text="content" />
 
         <TextView

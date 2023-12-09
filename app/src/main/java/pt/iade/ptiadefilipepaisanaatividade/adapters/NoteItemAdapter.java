@@ -42,7 +42,7 @@ public class NoteItemAdapter extends RecyclerView.Adapter<NoteItemAdapter.ViewHo
         holder.noteTitleView.setText(item.getTitle());
         holder.noteContentView.setText(item.getContent());
         holder.noteCreationDateView.setText(item.getModifiedDateAsString());
-        holder.noteModifiedDateView.setText(item.getModifiedDateAsString());
+        holder.noteModifiedDateView.setText(item.getCreationDateAsString());
 
     }
 

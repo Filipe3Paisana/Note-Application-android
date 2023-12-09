@@ -11,7 +11,6 @@ import android.view.Menu;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.util.Calendar;
 import java.util.GregorianCalendar;
 import pt.iade.ptiadefilipepaisanaatividade.models.NoteItem;
 

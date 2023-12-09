@@ -59,21 +59,28 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == EDITOR_ACTIVITY_RETURN_ID) {
-            if(resultCode == AppCompatActivity.RESULT_OK) {
-                int position = data.getIntExtra("position", - 1);
+        if (requestCode == EDITOR_ACTIVITY_RETURN_ID) {
+            if (resultCode == AppCompatActivity.RESULT_OK) {
+                int position = data.getIntExtra("position", -1);
                 NoteItem updatedItem = (NoteItem) data.getSerializableExtra("item");
 
-                if(position == -1) {
+                if (position == -1) {
                     itemsList.add(updatedItem);
                     itemsRowAdapter.notifyItemInserted(itemsList.size() - 1);
-                } else{
+                } else {
                     itemsList.set(position, updatedItem);
                     itemsRowAdapter.notifyItemChanged(position);
+                }
+            } else if (resultCode == RESULT_FIRST_USER) {
+                int position = data.getIntExtra("position", -1);
+                if (position != -1) {
+                    itemsList.remove(position);
+                    itemsRowAdapter.notifyItemRemoved(position);
                 }
             }
         }
     }
+
     private void setupComponents() {
         setSupportActionBar(findViewById(R.id.toolbar));
 

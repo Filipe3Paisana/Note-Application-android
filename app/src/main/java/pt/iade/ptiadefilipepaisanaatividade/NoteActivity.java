@@ -48,20 +48,21 @@ public class NoteActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId() == R.id.save_note) {
+            commitView();
+            this.item.save();
 
-                commitView();
-                this.item.save();
+            Intent returnIntent = new Intent();
+            returnIntent.putExtra("position", this.listPosition);
+            returnIntent.putExtra("item", this.item);
+            setResult(AppCompatActivity.RESULT_OK, returnIntent);
 
-                Intent returnIntent = new Intent();
-                returnIntent.putExtra("position", this.listPosition);
-                returnIntent.putExtra("item", this.item);
-                setResult(AppCompatActivity.RESULT_OK, returnIntent);
-
-                finish();
-                return true;
+            finish();
+            return true;
         }
         if(item.getItemId() == R.id.delete_note) {
             showDeleteConfirmationDialog();
+
+
             return true;
         }
 
@@ -96,6 +97,9 @@ public class NoteActivity extends AppCompatActivity {
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra("position", listPosition);
+                setResult(RESULT_FIRST_USER, returnIntent); // Usando um código de resultado personalizado para deleção
                 finish();
             }
         });
@@ -110,5 +114,6 @@ public class NoteActivity extends AppCompatActivity {
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
+
 
 }

@@ -19,6 +19,8 @@ public class NoteActivity extends AppCompatActivity {
     protected EditText noteBody;
     protected TextView lastModified;
 
+    protected TextView noteCreationDateView;
+
     protected NoteItem item;
 
     protected int listPosition;
@@ -74,6 +76,8 @@ public class NoteActivity extends AppCompatActivity {
         noteTitle =  findViewById(R.id.note_title);
         noteBody = findViewById(R.id.note_body);
         lastModified = findViewById(R.id.last_modified);
+        noteCreationDateView = findViewById(R.id.creation_date);
+
 
         populateView();
     }
@@ -87,6 +91,7 @@ public class NoteActivity extends AppCompatActivity {
         item.setTitle(noteTitle.getText().toString());
         item.setContent(noteBody.getText().toString());
         item.setModifiedDate(new GregorianCalendar());
+
 
     }
     private void showDeleteConfirmationDialog() {

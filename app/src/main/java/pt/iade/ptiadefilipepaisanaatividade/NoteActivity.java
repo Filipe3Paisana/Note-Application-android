@@ -4,15 +4,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
 import androidx.appcompat.app.AlertDialog;
-
 import android.content.Intent;
 import android.view.MenuItem;
 import android.os.Bundle;
 import android.view.Menu;
 import android.widget.EditText;
 import android.widget.TextView;
-import java.util.GregorianCalendar;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import pt.iade.ptiadefilipepaisanaatividade.models.NoteItem;
 
 public class NoteActivity extends AppCompatActivity {
@@ -21,14 +21,20 @@ public class NoteActivity extends AppCompatActivity {
     protected TextView lastModified;
 
     protected NoteItem item;
+
+    protected int listPosition;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note);
 
-        Intent noteIntent = getIntent();
+        Intent intent = getIntent();
 
-        item = (NoteItem) noteIntent.getSerializableExtra("item");
+        listPosition = intent.getIntExtra("position", -1);
+
+        item = (NoteItem) intent.getSerializableExtra("item");
 
         setupComponents();
     }
@@ -43,10 +49,17 @@ public class NoteActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId() == R.id.save_note) {
 
-            finish();
-            return true;
-        }
+                commitView();
+                this.item.save();
 
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra("position", this.listPosition);
+                returnIntent.putExtra("item", this.item);
+                setResult(AppCompatActivity.RESULT_OK, returnIntent);
+
+                finish();
+                return true;
+        }
         if(item.getItemId() == R.id.delete_note) {
             showDeleteConfirmationDialog();
             return true;
@@ -57,9 +70,11 @@ public class NoteActivity extends AppCompatActivity {
 
     private void setupComponents() {
         setSupportActionBar(findViewById(R.id.toolbar));
+
         noteTitle =  findViewById(R.id.note_title);
         noteBody = findViewById(R.id.note_body);
         lastModified = findViewById(R.id.last_modified);
+
         populateView();
     }
     protected void populateView() {
@@ -68,7 +83,12 @@ public class NoteActivity extends AppCompatActivity {
         lastModified.setText(item.getModifiedDateAsString().toString());
     }
 
+    protected void commitView() {
+        item.setTitle(noteTitle.getText().toString());
+        item.setContent(noteBody.getText().toString());
+        item.setModifiedDate(new GregorianCalendar());
 
+    }
     private void showDeleteConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Confirmar");

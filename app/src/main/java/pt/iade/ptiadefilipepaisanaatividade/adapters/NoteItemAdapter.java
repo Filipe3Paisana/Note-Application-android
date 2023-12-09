@@ -5,13 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.ArrayList;
-import java.util.List;
-
 import pt.iade.ptiadefilipepaisanaatividade.R;
 import pt.iade.ptiadefilipepaisanaatividade.models.NoteItem;
 
@@ -28,8 +24,11 @@ public class NoteItemAdapter extends RecyclerView.Adapter<NoteItemAdapter.ViewHo
     }
 
     public void setClickListener(ItemClickListener listener) {
-        this.clickListener = listener;
+        clickListener = listener;
     }
+
+
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.row_note_item, parent, false);
@@ -37,8 +36,9 @@ public class NoteItemAdapter extends RecyclerView.Adapter<NoteItemAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder( ViewHolder holder, int position) {
         NoteItem item = items.get(position);
+
         holder.noteTitleView.setText(item.getTitle());
         holder.noteContentView.setText(item.getContent());
         holder.noteCreationDateView.setText(item.getModifiedDateAsString());
@@ -70,17 +70,15 @@ public class NoteItemAdapter extends RecyclerView.Adapter<NoteItemAdapter.ViewHo
 
 
         @Override
-        public void onClick(View v) {
-            if(clickListener != null) {
-                clickListener.onItemClick(v, getAdapterPosition());
+        public void onClick(View view) {
+            if (clickListener != null) {
+                clickListener.onItemClick(view, getAdapterPosition());
             }
-
         }
     }
 
     public interface ItemClickListener {
         void onItemClick(View view, int position);
     }
-
 
 }

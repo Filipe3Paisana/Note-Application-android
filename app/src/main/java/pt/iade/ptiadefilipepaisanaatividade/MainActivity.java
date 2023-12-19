@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        itemsList = NoteItem.List();
 
         setupComponents();
     }
@@ -83,23 +82,32 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupComponents() {
         setSupportActionBar(findViewById(R.id.toolbar));
+        itemsListView = (RecyclerView) findViewById(R.id.notas_list);
+        itemsListView.setLayoutManager(new LinearLayoutManager(this));
 
-        itemsRowAdapter = new NoteItemAdapter(this, itemsList);
-        itemsRowAdapter.setClickListener(new NoteItemAdapter.ItemClickListener() {
+        NoteItem.List(new NoteItem.ListResponse() {
             @Override
+            public void onResponse(ArrayList<NoteItem> items) {
+                itemsList = items;
 
-            public void onItemClick(View view, int position) {
-                Intent intent = new Intent(MainActivity.this, NoteActivity.class);
-                intent.putExtra("position", position);
-                intent.putExtra("item", itemsList.get(position));
+                itemsRowAdapter = new NoteItemAdapter(MainActivity.this, itemsList);
+                itemsRowAdapter.setClickListener(new NoteItemAdapter.ItemClickListener() {
+                    @Override
 
-                startActivityForResult(intent, EDITOR_ACTIVITY_RETURN_ID);
+                    public void onItemClick(View view, int position) {
+                        Intent intent = new Intent(MainActivity.this, NoteActivity.class);
+                        intent.putExtra("position", position);
+                        intent.putExtra("item", itemsList.get(position));
+
+                        startActivityForResult(intent, EDITOR_ACTIVITY_RETURN_ID);
+                    }
+                });
+
+                itemsListView.setAdapter(itemsRowAdapter);
+
             }
         });
 
-        itemsListView = (RecyclerView) findViewById(R.id.notas_list);
-        itemsListView.setLayoutManager(new LinearLayoutManager(this));
-        itemsListView.setAdapter(itemsRowAdapter);
     }
 
 }

@@ -10,7 +10,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.widget.EditText;
 import android.widget.TextView;
-
+import pt.iade.ptiadefilipepaisanaatividade.utilities.WebRequest;
 import java.util.GregorianCalendar;
 import pt.iade.ptiadefilipepaisanaatividade.models.NoteItem;
 
@@ -91,9 +91,9 @@ public class NoteActivity extends AppCompatActivity {
         item.setTitle(noteTitle.getText().toString());
         item.setContent(noteBody.getText().toString());
         item.setModifiedDate(new GregorianCalendar());
-
-
     }
+
+
     private void showDeleteConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Confirmar");
@@ -103,7 +103,7 @@ public class NoteActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 Intent returnIntent = new Intent();
                 returnIntent.putExtra("position", listPosition);
-                setResult(RESULT_FIRST_USER, returnIntent); // Usando um código de resultado personalizado para deleção
+                setResult(RESULT_FIRST_USER, returnIntent);
                 finish();
             }
         });

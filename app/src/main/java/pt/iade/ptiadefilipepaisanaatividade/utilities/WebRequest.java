@@ -191,4 +191,23 @@ public class WebRequest {
 
         return uri;
     }
+
+    public void performDeleteRequest() {
+        try {
+            URI uri = buildUri(null);
+            HttpURLConnection urlConnection = (HttpURLConnection) uri.toURL().openConnection();
+            urlConnection.setRequestMethod("DELETE");
+            urlConnection.setUseCaches(false);
+            urlConnection.setDoOutput(true);
+
+            // Get request response.
+            InputStream is = new BufferedInputStream(urlConnection.getInputStream());
+            String result = readStreamToString(is);
+            Log.i("WebRequest-Response", result);
+
+            is.close();
+        } catch (Exception e) {
+            Log.e("WebRequest", e.toString());
+        }
+    }
 }

@@ -38,17 +38,21 @@ public class NoteItem implements Serializable {
     }
 
     public static void List(ListResponse response){
+        ArrayList<NoteItem> items = new ArrayList<NoteItem>();
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 try{
-                    WebRequest request =   new WebRequest(new URL(WebRequest.LOCALHOST + "/api/list" ));
+                    WebRequest request =   new WebRequest(new URL(WebRequest.LOCALHOST + "/api/notes" ));
+
                     String resp = request.performGetRequest();
 
                     JsonObject json = new Gson().fromJson(resp,JsonObject.class);
                     JsonArray array = json.getAsJsonArray("items");
 
+
                     ArrayList<NoteItem> items = new ArrayList<NoteItem>();
+
                     for(JsonElement elem : array){
                         items.add(new Gson().fromJson(elem,NoteItem.class));
                     }
@@ -111,6 +115,19 @@ public class NoteItem implements Serializable {
         thread.start();
 
     }
+    public void delete(){
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    WebRequest request =   new WebRequest(new URL(WebRequest.LOCALHOST + "/api/notes/" + id));
+                    request.performDeleteRequest();
+                }catch(Exception e){
+                    Log.e("noteItem",e.toString());
+                }
+            }
+        });
+    }
 
     public void setId(int id) {
         this.id = id;
@@ -148,10 +165,10 @@ public class NoteItem implements Serializable {
         return modifiedDate;
     }
     public String getModifiedDateAsString() {
-        return modifiedDate.get(Calendar.DAY_OF_MONTH) + "/" + modifiedDate.get(Calendar.MONTH) + "/" + modifiedDate.get(Calendar.YEAR) + " " + modifiedDate.get(Calendar.HOUR_OF_DAY) + ":" + modifiedDate.get(Calendar.MINUTE ) + ":" + modifiedDate.get(Calendar.SECOND);
+        return modifiedDate.get(Calendar.DAY_OF_MONTH) + "/" + modifiedDate.get(Calendar.MONTH) + "/" + modifiedDate.get(Calendar.YEAR) + " " + modifiedDate.get(Calendar.HOUR_OF_DAY);
     }
     public String getCreationDateAsString() {
-        return creationDate.get(Calendar.DAY_OF_MONTH) + "/" + creationDate.get(Calendar.MONTH) + "/" + creationDate.get(Calendar.YEAR) + " " + creationDate.get(Calendar.HOUR_OF_DAY) + ":" + creationDate.get(Calendar.MINUTE) + ":" + creationDate.get(Calendar.SECOND);
+        return creationDate.get(Calendar.DAY_OF_MONTH) + "/" + creationDate.get(Calendar.MONTH) + "/" + creationDate.get(Calendar.YEAR) + " " + creationDate.get(Calendar.HOUR_OF_DAY);
     }
     public void setModifiedDate(Calendar modifiedDate) {
         this.modifiedDate = modifiedDate;

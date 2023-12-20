@@ -102,6 +102,7 @@ public class NoteActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent returnIntent = new Intent();
+                item.delete();
                 returnIntent.putExtra("position", listPosition);
                 setResult(RESULT_FIRST_USER, returnIntent);
                 finish();

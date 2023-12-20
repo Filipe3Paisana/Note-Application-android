@@ -2,11 +2,15 @@ package pt.iade.ptiadefilipepaisanaatividade.models;
 
 import android.util.Log;
 import android.widget.Toast;
+import android.widget.Toast;
 
+import pt.iade.ptiadefilipepaisanaatividade.utilities.CalendarJsonAdapter;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.annotations.JsonAdapter;
+
 import pt.iade.ptiadefilipepaisanaatividade.utilities.WebRequest;
 import java.io.Serializable;
 import java.net.URL;
@@ -22,7 +26,9 @@ public class NoteItem implements Serializable {
 
     private String title;
     private String content;
+    @JsonAdapter(CalendarJsonAdapter.class)
     private Calendar creationDate;
+    @JsonAdapter(CalendarJsonAdapter.class)
     private Calendar modifiedDate;
 
     public NoteItem(){
@@ -47,14 +53,17 @@ public class NoteItem implements Serializable {
 
                     String resp = request.performGetRequest();
 
-                    JsonObject json = new Gson().fromJson(resp,JsonObject.class);
-                    JsonArray array = json.getAsJsonArray("items");
+                    Gson gson = new Gson();
+
+                    NoteItem[] array = gson.fromJson(resp,NoteItem[].class);
+                    //JsonObject json = new Gson().fromJson(resp,JsonObject.class);
+                    //JsonArray array = json.getAsJsonArray("items");
 
 
                     ArrayList<NoteItem> items = new ArrayList<NoteItem>();
 
-                    for(JsonElement elem : array){
-                        items.add(new Gson().fromJson(elem,NoteItem.class));
+                    for(NoteItem elem : array){
+                        items.add(elem);
                     }
 
                     response.onResponse(items);
@@ -127,6 +136,7 @@ public class NoteItem implements Serializable {
                 }
             }
         });
+        thread.start();
     }
 
     public void setId(int id) {
@@ -165,14 +175,15 @@ public class NoteItem implements Serializable {
         return modifiedDate;
     }
     public String getModifiedDateAsString() {
-        return modifiedDate.get(Calendar.DAY_OF_MONTH) + "/" + modifiedDate.get(Calendar.MONTH) + "/" + modifiedDate.get(Calendar.YEAR) + " " + modifiedDate.get(Calendar.HOUR_OF_DAY);
+        return modifiedDate.get(Calendar.YEAR)+ "-" + modifiedDate.get(Calendar.MONTH) + "-" + modifiedDate.get(Calendar.DAY_OF_MONTH);
     }
     public String getCreationDateAsString() {
-        return creationDate.get(Calendar.DAY_OF_MONTH) + "/" + creationDate.get(Calendar.MONTH) + "/" + creationDate.get(Calendar.YEAR) + " " + creationDate.get(Calendar.HOUR_OF_DAY);
+        return creationDate.get(Calendar.YEAR)+ "-" + creationDate.get(Calendar.MONTH) + "-" + creationDate.get(Calendar.DAY_OF_MONTH);
     }
     public void setModifiedDate(Calendar modifiedDate) {
         this.modifiedDate = modifiedDate;
     }
+
     public interface GetByIdResponse{
         public void onResponse(NoteItem item);
     }
